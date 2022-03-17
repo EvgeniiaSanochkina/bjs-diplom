@@ -45,6 +45,17 @@ moneyManager.conversionMoneyCallback = (data) => {
     })
 }
 
+moneyManager.sendMoneyCallback = (data) => {
+    ApiConnector.transferMoney(data, callback => {
+        if (callback.success) {
+            ProfileWidget.showProfile(callback.data);
+            moneyManager.setMessage(callback.success, 'Отправление успех!');
+        } else {
+            moneyManager.setMessage(callback.false, callback.error);
+        }
+    })
+}
+
 const favoritesWidget = new FavoritesWidget();
 
 ApiConnector.getFavorites((callback) => {
